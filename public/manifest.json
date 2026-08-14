@@ -1,0 +1,18 @@
+{
+  "name": "HealthAid",
+  "short_name": "HealthAid",
+  "description": "Your personal health companion for pregnancy tracking and maternal care",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8F9FB",
+  "theme_color": "#1FB387",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
