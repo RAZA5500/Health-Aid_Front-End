@@ -27,7 +27,7 @@ export default function BottomNav() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] safe-bottom lg:hidden">
-      <div className="responsive-container mx-auto flex justify-around items-center py-2.5 px-1">
+      <div className="w-full max-w-5xl mx-auto flex justify-around items-center py-2 px-1">
         {navItems.map(({ href, label, icon: Icon, badgeKey }) => {
           const active = pathname === href || pathname.startsWith(href + "/");
           const badge = badgeKey === "messages" ? unreadMessages : 0;
@@ -35,7 +35,7 @@ export default function BottomNav() {
             <Link
               key={href}
               href={href}
-              className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-colors relative ${
+              className={`flex flex-col items-center gap-0.5 px-1.5 sm:px-2 py-1 rounded-xl transition-colors relative min-h-11 min-w-[3rem] ${
                 active ? "text-secondary" : "text-gray-400 hover:text-gray-600"
               }`}
             >

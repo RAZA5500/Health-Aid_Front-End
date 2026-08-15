@@ -43,17 +43,17 @@ export default function RecordsPage() {
       ) : (
         <div className="space-y-3">
           {records.map((record) => (
-            <div key={record._id} className="card p-4 flex items-center gap-3">
-              <div className="w-10 h-10 bg-teal-50 rounded-xl flex items-center justify-center">
+            <div key={record._id} className="card p-4 flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 bg-teal-50 rounded-xl flex items-center justify-center shrink-0">
                 <FileText size={18} className="text-teal-600" />
               </div>
-              <div className="flex-1">
-                <p className="font-semibold text-sm text-gray-900">{record.title}</p>
-                <p className="text-xs text-gray-500">
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-sm text-gray-900 truncate">{record.title}</p>
+                <p className="text-xs text-gray-500 truncate">
                   {format(new Date(record.createdAt), "MMM d, yyyy")} · {record.recordType}
                 </p>
               </div>
-              <button type="button" className="text-gray-400 hover:text-primary" aria-label="Download">
+              <button type="button" className="text-gray-400 hover:text-primary touch-target rounded-lg shrink-0" aria-label="Download">
                 <Download size={18} />
               </button>
             </div>

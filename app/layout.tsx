@@ -39,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={`${poppins.variable} h-full`}>
-      <body suppressHydrationWarning className="min-h-full antialiased font-sans">
+      <body suppressHydrationWarning className="min-h-full antialiased font-sans overflow-x-hidden">
         <Providers>{children}</Providers>
       </body>
     </html>

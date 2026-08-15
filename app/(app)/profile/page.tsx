@@ -59,7 +59,7 @@ export default function ProfilePage() {
             </div>
             <div>
               <p className="text-xs text-gray-400">{label}</p>
-              <p className="text-sm font-medium text-gray-800">{value}</p>
+              <p className="text-sm font-medium text-gray-800 break-words">{value}</p>
             </div>
           </div>
         ))}

@@ -13,7 +13,7 @@ export const SOCKET_URL =
 
 export const AUTH_SESSION_EXPIRED_EVENT = "auth:session-expired";
 
-const api = axios.create({ baseURL: API_URL });
+const api = axios.create({ baseURL: API_URL, withCredentials: true });
 
 let isRefreshing = false;
 let failedQueue: Array<{
@@ -42,7 +42,6 @@ function shouldSkipRefresh(url?: string) {
 function clearStoredTokens() {
   if (typeof window === "undefined") return;
   localStorage.removeItem("token");
-  localStorage.removeItem("refreshToken");
   window.dispatchEvent(new Event(AUTH_SESSION_EXPIRED_EVENT));
 }
 
@@ -68,14 +67,6 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    const refreshToken =
-      typeof window !== "undefined" ? localStorage.getItem("refreshToken") : null;
-
-    if (!refreshToken) {
-      clearStoredTokens();
-      return Promise.reject(error);
-    }
-
     if (isRefreshing) {
       return new Promise<string>((resolve, reject) => {
         failedQueue.push({ resolve, reject });
@@ -89,15 +80,11 @@ api.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      const { data } = await axios.post(`${API_URL}/auth/refresh`, { refreshToken });
+      const { data } = await api.post("/auth/refresh");
       const newAccessToken = (data.accessToken || data.token) as string;
-      const newRefreshToken = data.refreshToken as string | undefined;
 
       if (typeof window !== "undefined") {
         localStorage.setItem("token", newAccessToken);
-        if (newRefreshToken) {
-          localStorage.setItem("refreshToken", newRefreshToken);
-        }
       }
 
       processQueue(null, newAccessToken);
@@ -118,8 +105,8 @@ export default api;
 export const authApi = {
   signup: (data: Record<string, unknown>) => api.post("/users/signup", data),
   login: (data: { email: string; password: string }) => api.post("/users/login", data),
-  refresh: (refreshToken: string) => api.post("/auth/refresh", { refreshToken }),
-  logout: (refreshToken: string) => api.post("/auth/logout", { refreshToken }),
+  refresh: () => api.post("/auth/refresh"),
+  logout: () => api.post("/auth/logout"),
   googleAuth: (data: { credential: string }) => api.post("/users/auth/google", data),
   appleAuth: (data: { idToken: string; name?: { firstName?: string; lastName?: string } | string }) =>
     api.post("/users/auth/apple", data),

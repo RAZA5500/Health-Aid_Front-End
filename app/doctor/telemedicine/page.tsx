@@ -204,13 +204,13 @@ export default function DoctorTelemedicinePage() {
             <div className="space-y-3">
               {consultations.map((c) => (
                 <div key={c._id} className="card p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="font-semibold text-gray-900">{c.patient.name}</p>
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="font-semibold text-gray-900 truncate">{c.patient.name}</p>
                       <p className="text-xs text-gray-500 mt-1">{STATUS_LABELS[c.status]}</p>
-                      {c.reason && <p className="text-xs text-gray-400 mt-1">{c.reason}</p>}
+                      {c.reason && <p className="text-xs text-gray-400 mt-1 break-words">{c.reason}</p>}
                     </div>
-                    <div className="shrink-0">{getActions(c)}</div>
+                    <div className="shrink-0 w-full sm:w-auto">{getActions(c)}</div>
                   </div>
                 </div>
               ))}

@@ -137,15 +137,15 @@ export default function AdminUsersPage() {
 
       {showCreate && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-end sm:items-center justify-center p-4">
-          <div className="bg-white rounded-2xl w-full max-w-md max-h-[90vh] overflow-y-auto p-5">
+          <div className="bg-white rounded-2xl w-full max-w-md max-h-[90vh] overflow-y-auto p-5 rounded-b-none sm:rounded-2xl">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-bold text-gray-900">Create Staff Account</h2>
-              <button type="button" onClick={() => setShowCreate(false)} className="text-gray-400">
+              <button type="button" onClick={() => setShowCreate(false)} className="text-gray-400 touch-target rounded-lg">
                 <X size={20} />
               </button>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 mb-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
               {STAFF_ROLES.map((r) => (
                 <button
                   key={r}
@@ -235,7 +235,7 @@ export default function AdminUsersPage() {
               <button
                 type="button"
                 onClick={() => toggleStatus(u._id)}
-                className={`p-2 rounded-xl border ${u.isActive ? "border-red-200 text-red-500 hover:bg-red-50" : "border-green-200 text-green-600 hover:bg-green-50"}`}
+                className={`p-2 rounded-xl border min-h-11 min-w-11 flex items-center justify-center ${u.isActive ? "border-red-200 text-red-500 hover:bg-red-50" : "border-green-200 text-green-600 hover:bg-green-50"}`}
                 title={u.isActive ? "Deactivate" : "Activate"}
               >
                 {u.isActive ? <UserX size={18} /> : <UserCheck size={18} />}

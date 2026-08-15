@@ -304,12 +304,12 @@ export default function TelemedicinePage() {
                 key={doc._id}
                 type="button"
                 onClick={() => handleSetPreferred(doc._id)}
-                className={`w-full p-3 rounded-xl text-left text-sm flex justify-between items-center ${
+                className={`w-full p-3 rounded-xl text-left text-sm flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 min-h-11 ${
                   preferredDoctorId === doc._id ? "ring-2 ring-primary/40 bg-primary/5" : "bg-gray-50"
                 }`}
               >
-                <span className="font-medium">{doc.name}</span>
-                <span className="text-xs text-gray-400">{doc.specialization || doc.specialty}</span>
+                <span className="font-medium truncate">{doc.name}</span>
+                <span className="text-xs text-gray-400 truncate sm:text-right">{doc.specialization || doc.specialty}</span>
               </button>
             ))}
           </div>

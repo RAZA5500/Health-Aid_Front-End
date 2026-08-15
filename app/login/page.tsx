@@ -22,7 +22,7 @@ export default function LoginPage() {
     try {
       const res = await authApi.login(form);
       toast.success(`Welcome back, ${res.data.user.name}!`);
-      login(res.data.token, res.data.user, res.data.redirectTo, res.data.refreshToken);
+      login(res.data.token, res.data.user, res.data.redirectTo);
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
       toast.error(msg || "Login failed. Check your credentials.");

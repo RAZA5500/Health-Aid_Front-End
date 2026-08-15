@@ -134,29 +134,34 @@ export default function EmergencyAlertModal({ alert, onDismiss }: EmergencyAlert
   };
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-red-950/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-4 bg-red-950/60 backdrop-blur-sm">
       <div
         role="alertdialog"
         aria-modal="true"
-        className="bg-white rounded-2xl w-full max-w-lg shadow-2xl border-4 border-red-500 animate-[pulse_1s_ease-in-out_3]"
+        className="bg-white rounded-2xl w-full max-w-lg shadow-2xl border-4 border-red-500 animate-[pulse_1s_ease-in-out_3] rounded-b-none sm:rounded-2xl"
       >
-        <div className="bg-red-500 text-white px-5 py-4 rounded-t-xl flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <AlertTriangle size={24} className="animate-bounce" />
-            <h2 className="font-bold text-lg">EMERGENCY ALERT</h2>
+        <div className="bg-red-500 text-white px-4 sm:px-5 py-4 rounded-t-xl flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <AlertTriangle size={24} className="animate-bounce shrink-0" />
+            <h2 className="font-bold text-base sm:text-lg truncate">EMERGENCY ALERT</h2>
           </div>
-          <button type="button" onClick={onDismiss} className="p-1 rounded-full hover:bg-red-600">
+          <button
+            type="button"
+            onClick={onDismiss}
+            className="touch-target rounded-full hover:bg-red-600 shrink-0"
+            aria-label="Dismiss alert"
+          >
             <X size={20} />
           </button>
         </div>
 
-        <div className="p-5 space-y-4 max-h-[70vh] overflow-y-auto">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 font-bold flex items-center justify-center text-lg">
+        <div className="p-4 sm:p-5 space-y-4 max-h-[70vh] overflow-y-auto">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 font-bold flex items-center justify-center text-lg shrink-0">
               {alert.patientName[0]}
             </div>
-            <div>
-              <p className="font-bold text-gray-900 text-lg">{alert.patientName}</p>
+            <div className="min-w-0">
+              <p className="font-bold text-gray-900 text-lg truncate">{alert.patientName}</p>
               <p className="text-xs text-red-600 font-medium">
                 Alert triggered {format(new Date(alert.triggeredAt), "h:mm a")}
               </p>
@@ -205,7 +210,7 @@ export default function EmergencyAlertModal({ alert, onDismiss }: EmergencyAlert
             type="button"
             onClick={handleAccept}
             disabled={accepting}
-            className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-60"
+            className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-60 min-h-11"
           >
             {accepting ? (
               <>
@@ -216,7 +221,7 @@ export default function EmergencyAlertModal({ alert, onDismiss }: EmergencyAlert
               "Accept Alert & View Patient"
             )}
           </button>
-          <button type="button" onClick={onDismiss} className="btn-secondary w-full">
+          <button type="button" onClick={onDismiss} className="btn-secondary w-full min-h-11">
             Dismiss Alert
           </button>
         </div>

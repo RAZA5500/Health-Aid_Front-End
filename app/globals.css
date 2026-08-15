@@ -23,6 +23,11 @@
   --font-sans: var(--font-poppins);
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -97,7 +102,12 @@ body {
 
 /* Page content padding helper */
 .page-content {
-  @apply px-4 pb-4 md:px-6 lg:px-8;
+  @apply px-4 pb-4 md:px-6 lg:px-8 min-w-0;
+}
+
+/* Minimum touch target (44px) for interactive controls */
+.touch-target {
+  @apply min-h-11 min-w-11 inline-flex items-center justify-center;
 }
 
 /* Responsive stat grid */
@@ -128,24 +138,6 @@ body {
 .healthaid-logo-animated .logo-heart {
   transform-origin: 24px 22px;
   animation: heart-beat 2s ease-in-out infinite;
-}
-
-@media (min-width: 768px) {
-  .responsive-container {
-    max-width: 28rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .responsive-container {
-    max-width: 32rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .responsive-container {
-    max-width: 36rem;
-  }
 }
 
 .dashboard-container {

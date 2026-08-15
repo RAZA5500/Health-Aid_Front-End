@@ -111,20 +111,20 @@ export default function DoctorDashboardPage() {
         ) : (
           <div className="space-y-2">
             {messageRequests.map((req) => (
-              <div key={req._id} className="card p-4 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/15 text-primary font-bold flex items-center justify-center">
+              <div key={req._id} className="card p-4 flex flex-col sm:flex-row sm:items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/15 text-primary font-bold flex items-center justify-center shrink-0">
                   {req.sender.name[0]}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm">{req.sender.name}</p>
-                  <p className="text-xs text-gray-500">{req.sender.email}</p>
+                  <p className="font-semibold text-sm truncate">{req.sender.name}</p>
+                  <p className="text-xs text-gray-500 truncate">{req.sender.email}</p>
                 </div>
-                <div className="flex gap-2 shrink-0">
+                <div className="flex gap-2 shrink-0 self-end sm:self-auto">
                   <button
                     type="button"
                     disabled={processingId === req._id}
                     onClick={() => handleRequestAction(req._id, "accept")}
-                    className="p-2 rounded-full bg-green-100 text-green-700 hover:bg-green-200 disabled:opacity-50"
+                    className="touch-target rounded-full bg-green-100 text-green-700 hover:bg-green-200 disabled:opacity-50"
                     title="Accept"
                   >
                     <Check size={18} />
@@ -133,7 +133,7 @@ export default function DoctorDashboardPage() {
                     type="button"
                     disabled={processingId === req._id}
                     onClick={() => handleRequestAction(req._id, "decline")}
-                    className="p-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 disabled:opacity-50"
+                    className="touch-target rounded-full bg-red-100 text-red-600 hover:bg-red-200 disabled:opacity-50"
                     title="Decline"
                   >
                     <X size={18} />
@@ -153,12 +153,12 @@ export default function DoctorDashboardPage() {
           </div>
           <div className="space-y-2">
             {consultations.map((c) => (
-              <div key={c._id} className="card p-4 flex items-center justify-between gap-3">
-                <div>
-                  <p className="font-semibold text-sm">{c.patient.name}</p>
+              <div key={c._id} className="card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="font-semibold text-sm truncate">{c.patient.name}</p>
                   <p className="text-xs text-gray-500 capitalize mt-1">Status: {c.status}</p>
                 </div>
-                <div className="flex gap-2 shrink-0">
+                <div className="flex flex-wrap gap-2 shrink-0">
                   {(c.status === "requested" || c.status === "pending") && (
                     <button
                       type="button"

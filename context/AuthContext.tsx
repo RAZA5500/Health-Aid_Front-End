@@ -18,7 +18,7 @@ interface AuthContextType {
   user: User | null;
   token: string | null;
   loading: boolean;
-  login: (token: string, user: User, redirectTo?: string, refreshToken?: string) => void;
+  login: (token: string, user: User, redirectTo?: string) => void;
   logout: () => void;
   refreshUser: () => Promise<void>;
 }
@@ -35,7 +35,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const clearSession = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
     setToken(null);
     setUser(null);
   };
@@ -51,22 +50,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const login = (newToken: string, newUser: User, redirectTo?: string, refreshToken?: string) => {
+  const login = (newToken: string, newUser: User, redirectTo?: string) => {
     localStorage.setItem("token", newToken);
-    if (refreshToken) {
-      localStorage.setItem("refreshToken", refreshToken);
-    }
     setToken(newToken);
     setUser(newUser);
     router.push(redirectTo || getAuthRedirectPath(newUser));
   };
 
   const performLogout = async () => {
-    const refreshToken = localStorage.getItem("refreshToken");
     try {
-      if (refreshToken) {
-        await authApi.logout(refreshToken);
-      }
+      await authApi.logout();
     } catch {
       // Proceed with local logout even if server invalidation fails
     }
@@ -81,19 +74,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    const stored = localStorage.getItem("token");
-    const storedRefresh = localStorage.getItem("refreshToken");
-    if (stored || storedRefresh) {
+    const initSession = async () => {
+      const stored = localStorage.getItem("token");
       if (stored) setToken(stored);
-      refreshUser()
-        .finally(() => {
-          const updatedToken = localStorage.getItem("token");
-          if (updatedToken) setToken(updatedToken);
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
-    }
+
+      try {
+        if (!stored) {
+          const res = await authApi.refresh();
+          const newToken = (res.data.accessToken || res.data.token) as string;
+          if (newToken) {
+            localStorage.setItem("token", newToken);
+            setToken(newToken);
+          }
+        }
+        await refreshUser();
+      } catch {
+        clearSession();
+      } finally {
+        const updatedToken = localStorage.getItem("token");
+        if (updatedToken) setToken(updatedToken);
+        setLoading(false);
+      }
+    };
+
+    initSession();
   }, []);
 
   useEffect(() => {

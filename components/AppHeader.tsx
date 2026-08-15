@@ -1,10 +1,11 @@
 "use client";
 
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Menu } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import NotificationDropdown from "@/components/NotificationDropdown";
+import { useMobileNav } from "@/components/layout/MobileNavContext";
 import { messagesApi } from "@/lib/api";
 
 interface AppHeaderProps {
@@ -23,6 +24,7 @@ export default function AppHeader({
   profileHref,
 }: AppHeaderProps) {
   const { user } = useAuth();
+  const mobileNav = useMobileNav();
   const [unreadMessages, setUnreadMessages] = useState(0);
 
   const defaultMessagesHref =
@@ -59,21 +61,33 @@ export default function AppHeader({
   }, [user]);
 
   return (
-    <header className="flex items-center justify-between px-4 md:px-6 py-4">
-      <div>
-        {greeting && (
-          <h1 className="text-xl md:text-2xl font-bold text-gray-900">
-            {greeting}
-            {showWave && " 👋"}
-          </h1>
+    <header className="flex items-center justify-between gap-2 px-4 md:px-6 py-4 min-w-0">
+      <div className="flex items-center gap-2 min-w-0 flex-1">
+        {mobileNav && (
+          <button
+            type="button"
+            onClick={mobileNav.openMenu}
+            className="lg:hidden touch-target shrink-0 rounded-full bg-white shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors"
+            aria-label="Open menu"
+          >
+            <Menu size={20} className="text-gray-600" />
+          </button>
         )}
-        {subtitle && <p className="text-sm text-gray-500 mt-0.5">{subtitle}</p>}
+        <div className="min-w-0">
+          {greeting && (
+            <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 truncate">
+              {greeting}
+              {showWave && " 👋"}
+            </h1>
+          )}
+          {subtitle && <p className="text-sm text-gray-500 mt-0.5 truncate">{subtitle}</p>}
+        </div>
       </div>
-      <div className="flex items-center gap-2.5">
+      <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
         <NotificationDropdown />
         <Link
           href={defaultMessagesHref}
-          className="relative p-2.5 rounded-full bg-white shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors"
+          className="relative touch-target rounded-full bg-white shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors"
         >
           <MessageCircle size={20} className="text-gray-600" />
           {unreadMessages > 0 && (
@@ -84,7 +98,7 @@ export default function AppHeader({
         </Link>
         <Link
           href={defaultProfileHref}
-          className="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center text-primary font-bold text-sm border-2 border-primary/20"
+          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-primary/15 flex items-center justify-center text-primary font-bold text-sm border-2 border-primary/20 shrink-0"
         >
           {user?.name?.[0]?.toUpperCase() || "U"}
         </Link>

@@ -61,7 +61,7 @@ export default function NotificationDropdown() {
             fetchNotifications();
           }
         }}
-        className="relative p-2.5 rounded-full bg-white shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+        className="relative touch-target rounded-full bg-white shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
       >
         <Bell size={20} className="text-gray-600" />
         {unreadCount > 0 && (

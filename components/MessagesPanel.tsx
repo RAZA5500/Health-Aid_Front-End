@@ -497,7 +497,7 @@ export default function MessagesPanel({
   const selected = selectedConv || conversations.find((c) => c._id === selectedId);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-0 lg:gap-4 lg:min-h-[calc(100vh-12rem)]">
+    <div className="flex flex-col lg:flex-row gap-0 lg:gap-4 lg:min-h-[calc(100vh-12rem)] min-w-0">
       <div
         className={`lg:w-80 xl:w-96 shrink-0 flex flex-col ${
           showChat ? "hidden lg:flex" : "flex"
@@ -521,7 +521,7 @@ export default function MessagesPanel({
             <button
               type="button"
               onClick={openModal}
-              className="btn-primary px-3 shrink-0 flex items-center gap-1"
+              className="btn-primary px-3 shrink-0 flex items-center gap-1 min-h-11"
               title="New Message"
             >
               <MessageSquarePlus size={18} />
@@ -606,7 +606,7 @@ export default function MessagesPanel({
                         setSelectedId(conv._id);
                         setShowDeleteChatConfirm(true);
                       }}
-                      className="opacity-0 group-hover:opacity-100 focus:opacity-100 p-1.5 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 transition-opacity shrink-0"
+                      className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100 p-2 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 transition-opacity shrink-0"
                     >
                       <Trash2 size={16} />
                     </button>
@@ -655,10 +655,10 @@ export default function MessagesPanel({
       >
         {selected ? (
           <>
-            <div className="p-4 border-b border-gray-100 flex items-center gap-3 group">
+            <div className="p-3 sm:p-4 border-b border-gray-100 flex flex-wrap items-center gap-2 sm:gap-3 group">
               <button
                 type="button"
-                className="lg:hidden text-primary text-sm font-medium"
+                className="lg:hidden text-primary text-sm font-medium min-h-11 px-1 shrink-0"
                 onClick={() => {
                   setSelectedId(null);
                   setSelectedConv(null);
@@ -667,19 +667,19 @@ export default function MessagesPanel({
                 ← Back
               </button>
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${getAvatarColor(getDisplayName(selected, userRole))}`}
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0 ${getAvatarColor(getDisplayName(selected, userRole))}`}
               >
                 {getDisplayName(selected, userRole)[0]}
               </div>
-              <div className="flex-1">
-                <p className="font-semibold text-gray-900">{getDisplayName(selected, userRole)}</p>
-                <p className="text-xs text-gray-400 capitalize">{getSubtitle(selected, userRole)}</p>
+              <div className="flex-1 min-w-0 basis-[40%]">
+                <p className="font-semibold text-gray-900 truncate">{getDisplayName(selected, userRole)}</p>
+                <p className="text-xs text-gray-400 capitalize truncate">{getSubtitle(selected, userRole)}</p>
               </div>
               <button
                 type="button"
                 title="Delete chat"
                 onClick={() => setShowDeleteChatConfirm(true)}
-                className="opacity-0 group-hover:opacity-100 focus:opacity-100 p-2 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 transition-opacity"
+                className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100 touch-target rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 transition-opacity shrink-0"
               >
                 <Trash2 size={18} />
               </button>
@@ -687,9 +687,11 @@ export default function MessagesPanel({
                 <button
                   type="button"
                   onClick={handleStartVideo}
-                  className="btn-blue px-3 py-2 text-xs flex items-center gap-1"
+                  className="btn-blue px-3 py-2 text-xs flex items-center gap-1 w-full sm:w-auto sm:ml-auto min-h-11 justify-center"
                 >
-                  <Video size={14} /> Start Video Consultation
+                  <Video size={14} />
+                  <span className="sm:hidden">Video</span>
+                  <span className="hidden sm:inline">Start Video Consultation</span>
                 </button>
               )}
             </div>
@@ -947,7 +949,7 @@ export default function MessagesPanel({
                 <button
                   type="submit"
                   disabled={sending || !newMessage.trim() || !canSend}
-                  className="btn-primary px-4 flex items-center gap-1 disabled:opacity-50"
+                  className="btn-primary px-4 flex items-center gap-1 disabled:opacity-50 min-h-11"
                 >
                   <Send size={18} />
                 </button>
@@ -974,15 +976,15 @@ export default function MessagesPanel({
       )}
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="card w-full max-w-md max-h-[80vh] flex flex-col">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 p-4">
+          <div className="card w-full max-w-md max-h-[85vh] sm:max-h-[80vh] flex flex-col rounded-b-none sm:rounded-[18px]">
             <div className="flex items-center justify-between p-4 border-b border-gray-100">
               <h3 className="font-semibold text-gray-900">Start a Conversation</h3>
               <button type="button" onClick={() => setShowModal(false)} className="p-1 rounded-full hover:bg-gray-100">
                 <X size={20} />
               </button>
             </div>
-            <div className="flex gap-2 p-4 border-b border-gray-100">
+            <div className="flex gap-2 p-4 border-b border-gray-100 flex-wrap">
               {(["doctors", "nurses", "reception"] as StaffCategory[]).map((cat) => (
                 <button
                   key={cat}
@@ -991,7 +993,7 @@ export default function MessagesPanel({
                     setModalCategory(cat);
                     loadModalStaff(cat);
                   }}
-                  className={`flex-1 py-2 text-xs font-medium rounded-lg capitalize ${
+                  className={`flex-1 min-w-[5.5rem] py-2.5 text-xs font-medium rounded-lg capitalize min-h-11 ${
                     modalCategory === cat ? "bg-primary text-white" : "bg-gray-100 text-gray-600"
                   }`}
                 >

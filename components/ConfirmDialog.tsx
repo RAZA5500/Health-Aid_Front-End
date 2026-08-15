@@ -25,20 +25,20 @@ export default function ConfirmDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby="confirm-dialog-title"
-        className="bg-white rounded-2xl w-full max-w-sm p-5 shadow-xl"
+        className="bg-white rounded-2xl w-full max-w-sm p-5 shadow-xl max-h-[90vh] overflow-y-auto rounded-b-none sm:rounded-2xl"
       >
         <h2 id="confirm-dialog-title" className="font-bold text-gray-900 text-lg mb-2">
           {title}
         </h2>
-        <p className="text-sm text-gray-500 mb-5">{message}</p>
-        <div className="flex gap-3">
-          <button type="button" onClick={onCancel} className="btn-secondary flex-1">
+        <p className="text-sm text-gray-500 mb-5 break-words">{message}</p>
+        <div className="flex flex-col-reverse sm:flex-row gap-3">
+          <button type="button" onClick={onCancel} className="btn-secondary flex-1 min-h-11">
             {cancelLabel}
           </button>
           <button
             type="button"
             onClick={onConfirm}
-            className={`flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm transition-colors ${
+            className={`flex-1 min-h-11 py-2.5 px-4 rounded-xl font-semibold text-sm transition-colors ${
               variant === "danger"
                 ? "bg-red-500 text-white hover:bg-red-600"
                 : "btn-primary"

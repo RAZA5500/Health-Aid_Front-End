@@ -43,7 +43,7 @@ export default function JourneyPage() {
             key={t}
             type="button"
             onClick={() => setActiveTab(t)}
-            className={`flex-1 py-3 text-sm font-semibold transition-colors relative ${
+            className={`flex-1 py-3 text-xs sm:text-sm font-semibold transition-colors relative min-h-11 ${
               activeTab === t ? "text-primary" : "text-gray-400"
             }`}
           >

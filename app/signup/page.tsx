@@ -37,7 +37,7 @@ export default function SignupPage() {
         phone: form.phone,
       });
       toast.success("Account created! Let's set up your pregnancy details.");
-      login(res.data.token, res.data.user, res.data.redirectTo, res.data.refreshToken);
+      login(res.data.token, res.data.user, res.data.redirectTo);
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
       toast.error(msg || "Signup failed. Please check your details.");

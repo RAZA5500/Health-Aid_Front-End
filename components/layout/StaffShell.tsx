@@ -23,7 +23,7 @@ export default function StaffShell({ children, navItems, title }: StaffShellProp
   const showContent = !isStaff || user?.clockedIn;
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background flex overflow-x-hidden">
       {/* Desktop sidebar */}
       <SidebarNav items={navItems} title={title} />
 
@@ -36,10 +36,15 @@ export default function StaffShell({ children, navItems, title }: StaffShellProp
             onClick={() => setMobileOpen(false)}
             aria-label="Close menu"
           />
-          <div className="absolute left-0 top-0 bottom-0 w-72 bg-white shadow-xl flex flex-col">
+          <div className="absolute left-0 top-0 bottom-0 w-[min(18rem,85vw)] bg-white shadow-xl flex flex-col safe-top safe-bottom">
             <div className="flex items-center justify-between p-4 border-b border-gray-100">
               <span className="font-bold text-gray-900">{title}</span>
-              <button type="button" onClick={() => setMobileOpen(false)} className="p-2">
+              <button
+                type="button"
+                onClick={() => setMobileOpen(false)}
+                className="touch-target rounded-lg hover:bg-gray-50"
+                aria-label="Close menu"
+              >
                 <X size={20} />
               </button>
             </div>
@@ -51,7 +56,7 @@ export default function StaffShell({ children, navItems, title }: StaffShellProp
                     key={href}
                     href={href}
                     onClick={() => setMobileOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium ${
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium min-h-11 ${
                       active ? "bg-primary/10 text-primary" : "text-gray-600"
                     }`}
                   >
@@ -65,21 +70,21 @@ export default function StaffShell({ children, navItems, title }: StaffShellProp
         </div>
       )}
 
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
         {/* Mobile top bar */}
         <header className="lg:hidden sticky top-0 z-40 bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3 safe-top">
           <button
             type="button"
             onClick={() => setMobileOpen(true)}
-            className="p-2 rounded-lg hover:bg-gray-50"
+            className="touch-target rounded-lg hover:bg-gray-50"
             aria-label="Open menu"
           >
             <Menu size={22} />
           </button>
-          <span className="font-bold text-gray-900">{title}</span>
+          <span className="font-bold text-gray-900 truncate">{title}</span>
         </header>
 
-        <main className="flex-1 p-4 md:p-6 safe-bottom">
+        <main className="flex-1 p-4 md:p-6 safe-bottom overflow-x-hidden min-w-0">
           <div className="w-full max-w-6xl mx-auto">
             {isStaff && <StaffDutyPanel />}
             {showContent ? children : null}

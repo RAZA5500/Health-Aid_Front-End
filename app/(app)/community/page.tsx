@@ -15,7 +15,7 @@ export default function CommunityPage() {
         <p className="text-sm">Share experiences and connect with other mothers in a future update.</p>
       </div>
 
-      <div className="flex gap-3 mt-5 md:grid md:grid-cols-3 md:gap-4 opacity-50 pointer-events-none">
+      <div className="grid grid-cols-3 gap-3 mt-5 md:gap-4 opacity-50 pointer-events-none">
         <div className="card flex-1 p-3.5 text-center">
           <Users size={20} className="text-primary mx-auto mb-1" />
           <p className="text-xs text-gray-500">Members</p>

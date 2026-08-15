@@ -168,7 +168,7 @@ export default function NotificationsPage() {
                 aria-label="Delete notification"
                 onClick={() => handleDelete(n._id)}
                 disabled={actionLoading === n._id}
-                className="text-gray-300 hover:text-red-400 p-1 shrink-0 disabled:opacity-50"
+                className="text-gray-300 hover:text-red-400 touch-target rounded-lg shrink-0 disabled:opacity-50"
               >
                 <Trash2 size={16} />
               </button>

@@ -190,7 +190,7 @@ export default function AppointmentsPage() {
                 <button
                   type="button"
                   onClick={() => handleDelete(appt._id)}
-                  className="text-gray-300 hover:text-red-400 p-1"
+                  className="text-gray-300 hover:text-red-400 touch-target rounded-lg shrink-0"
                 >
                   <Trash2 size={16} />
                 </button>
@@ -231,9 +231,9 @@ export default function AppointmentsPage() {
           </div>
 
           {form.doctorId && (
-            <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 rounded-xl px-3 py-2">
+            <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 rounded-xl px-3 py-2 min-w-0">
               <Circle size={8} className="fill-green-500 text-green-500 shrink-0" />
-              <span>
+              <span className="truncate">
                 <strong>{form.doctorName}</strong> · {form.specialization} · On duty
               </span>
             </div>
